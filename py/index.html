@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8" />
+		<title>index</title>
+	</head>
+
+	<body>
+		
+		<form method="GET" action="http://localhost:8080/">
+			<h3>GET method</h3>
+			text:
+			<br/>
+			<input type="text" name="get-text"/>
+			<br/>
+			password:
+			<br/>
+			<input type="password" name="get-password"/>
+			<br/>
+			<input type="radio" name="get-radio" value="true" autocomplete="off">
+			Yes
+			<br/>
+			<input type="radio" name="get-radio" value="false" autocomplete="off">
+			No
+			<br/>
+			<input type="radio" name="get-radio" value="unknown" disabled autocomplete="off">
+			(? disabled)
+			<br/>
+			hidden:
+			<br/>
+			<input type="hidden" name="get-hidden" value="hidden-44444"/>
+			<br/>
+			<input type="submit" value="Send to server"/>
+		</form>
+
+		<form method="POST" action="https://localhost:8081/?get_param=url_param">
+			<h3>POST method</h3>
+			text:
+			<br/>
+			<input type="text" name="post-text"/>
+			<br/>
+			password:
+			<br/>
+			<input type="password" name="post-password"/>
+			<br/>
+			<input type="radio" name="post-radio" value="true" autocomplete="off">
+			Yes
+			<br/>
+			<input type="radio" name="post-radio" value="false" autocomplete="off">
+			No
+			<br/>
+			<input type="radio" name="post-radio" value="unknown" disabled autocomplete="off">
+			(? disabled)
+			<br/>
+			hidden:
+			<br/>
+			<input type="hidden" name="post-hidden" value="hidden-44444"/>
+			<br/>
+			<input type="submit" value="Send to server"/>
+		</form>
+
+	</body>
+
+</html>

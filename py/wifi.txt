@@ -1,0 +1,160 @@
+﻿
+СПИСОК ЛИТЕРАТУРЫ
+
+полная информация по всем модулям (русс яз)
+http://wiki.amperka.ru/
+
+подключение и тестирование
+http://wiki.amperka.ru/%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D1%8B:troyka-wi-fi#%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0_%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B0
+
+утилиты для прошивки ESP8266
+http://wiki.amperka.ru/%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D1%8B:esp8266:flash-download-tool
+
+документация по АТ командам
+http://wiki.amperka.ru/_media/%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D1%8B:troyka-wi-fi:esp8266_at_commands.pdf
+
+программирование непосредственно самого ESP8266
+https://arduino-esp8266.readthedocs.io/en/latest/
+
+
+
+###################################################################################################################
+
+
+
+curl -k -v -u login:password -H "Content-Type: application/x-www-form-urlencoded" --data "param1=value1&par2=val2" https://192.168.2.119:8081/
+
+C:\Users\Hukumka\AppData\Local\Programs\Python\Python38-32\python.exe C:\Users\Hukumka\Desktop\arduino\py\webproxy.py
+cd C:\Users\Hukumka\Desktop\arduino\py
+C:\Users\Hukumka\AppData\Local\Programs\Python\Python38-32\python.exe C:\Users\Hukumka\Desktop\arduino\py\webserver.py
+
+curl https://192.168.2.12:8081/?getp_test -k -u login:password -H "Content-Type: application/x-www-form-urlencoded" --data "param1=value1&par2=val2" -v
+curl "http://192.168.2.12:8080/?getp=test&param1=value1&par2=val2" -v
+
+
+
+###################################################################################################################
+
+
+
+Mega Serial: 115200, NL+CR
+нормальное подключение на Mega Serial1: RX-TX1(p18) TX-RX1(p19)
+подключение для прошивки через Mega: RX-RX0(p0) TX-TX0(p1)
+
+1. прошивка Serial-AT
+AT
+	OK
+
+AT+GMR
+	AT version:0.40.0.0(Aug  8 2015 14:45:58)
+	SDK version:1.3.0
+	Ai-Thinker Technology Co.,Ltd.
+	Build:1.3.0.2 Sep 11 2015 11:48:04
+	OK
+
+2. обновление firmware на esp8266
+официальный сайт:
+	https://www.espressif.com/en/products/hardware/esp8266ex/resources
+свежая утилита:
+	https://www.espressif.com/sites/default/files/tools/flash_download_tools_v3.6.8.zip
+свежие файлы для прошивки
+	https://www.espressif.com/sites/default/files/ap/ESP8266_NonOS_AT_Bin_V1.7.2_0.zip
+прошивка от амперки, рабочая, но старая
+	http://wiki.amperka.ru/_media/%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D1%8B:esp8266:flash-download-tool:at_commands_esp8266.zip
+описание процесса:
+	http://wiki.amperka.ru/%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D1%8B:esp8266:flash-download-tool
+	https://www.electronicshub.org/update-flash-esp8266-firmware/
+подключение:
+	RX-RX0(p0) TX-TX0(p1)
+	+ перемычка reset
+	описание: http://wiki.amperka.ru/%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D1%8B:troyka-wi-fi#%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0_%D0%B6%D0%B5%D0%BB%D0%B5%D0%B7%D0%B0
+параметры:
+	правильный набор файлов и адресов размещения
+	26M
+	80MHz
+	QIO
+	16Mbit
+	115200
+	правильный COM порт
+закрыть ардуино софт, подключить, запустить софт для прошивки, сделать сброс на режим прошивки, подождать полминуты !!! , запустить процесс
+	(диод TX/RX на ардуино должен быстро погаснуть, а не долго гореть. иначе лучше сразу отключить и переподключить)
+
+архив с прошивкой
+	- bin - at - README - тут вся информация по файлам и адресам
+
+at, 16Mbit-C1
+	26M
+	80MHz
+	QIO
+	16-C1
+	115200
+	правильный COM порт
+	все файлы прошивки (пять) - с адресами из 16Mbit-C1
+		# BOOT MODE
+		## download
+		### Flash size 16Mbit-C1:	1024KB+1024KB
+		boot_v1.2+.bin				0x00000
+		user1.2048.new.5.bin		0x01000
+		esp_init_data_default.bin	0x1fc000
+		blank.bin					0xfe000  &  0x1fe000
+
+3. после прошивки:
+	нормальное подключение на Mega Serial1
+	прошивка Serial-AT
+
+суффиксы команд (если есть): 
+	_CUR - временно установить, до перезагрузки
+	_DEF - установить, запомнить и восстанавливать при перезагрузке
+
+AT
+	проверка работы
+	OK
+
+AT+GMR
+	текущие версии
+	AT version:1.7.2.0(Jan 19 2020 09:39:04)
+	SDK version:3.0.2(824dc80)
+	compile time:Jan 20 2020 10:09:38
+	Bin version(Wroom 02):1.7.2
+	OK
+
+AT+CWMODE_DEF=1
+	установить режим и записать: 1=клиент, 2=точка доступа, 3=смешаный
+
+AT+CWJAP_CUR?
+	текущее подключение себя как клиента к точке доступа
+	No AP
+
+AT+CWQAP
+	отсоединиться от любых точек, если уже подключен
+
+AT+CWLAP
+	список доступный сетей (необязательно, на старых прошивках глючит)
+
+AT+CWJAP_DEF="ssid","password"
+	подключиться к wifi, запомнить
+	WIFI CONNECTED
+	WIFI GOT IP
+
+AT+CIFSR
+	проверка подключения, должен показать IP адрес
+	+CIFSR:STAIP,"192.168.2.75"
+	+CIFSR:STAMAC,"ec:fa:bc:2e:f3:c9"
+
+AT+CWAUTOCONN=1
+	поднимать соединение после включения
+
+AT+PING="ya.ru"
+	проверить интернет
+	+8
+	OK
+
+	
+//skip em
+AT+CIUPDATE
+	обновление прошивки
+AT+GMR
+
+AT+UART_DEF=115200,8,1,0,0
+	изменить скорость контроллера, для ардуины с программным портом
+
