@@ -1,14 +1,10 @@
- * SPI MISO    MISO         12 / ICSP-1   50        D12        ICSP-1           14
- * SPI SCK     SCK          13 / ICSP-3   52        D13        ICSP-3           15
- */
-
 #include <SPI.h>
 #include <MFRC522.h>
 
-#define RST_PIN         5          // rst
-#define SS_PIN          53         // sda
+#define RST_PIN 5  // rst
+#define SDA_PIN 53 // sda
 
-MFRC522 mfrc522(SS_PIN, RST_PIN);  // Create MFRC522 instance
+MFRC522 mfrc522(SDA_PIN, RST_PIN);  // Create MFRC522 instance
 
 void setup() {
   Serial.begin(9600);   // Initialize serial communications with the PC
